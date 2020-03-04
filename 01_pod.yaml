@@ -1,0 +1,21 @@
+
+apiVersion: v1
+# Tipo de fichero que se va a crear.
+kind: Pod
+# Aquí van los datos propios del pod como el nombre y las etiquetas que tiene asociados para seleccionarlo
+metadata:
+  name: hermes-demo
+# Especificamos que el pod tenga una etiqueta con clave "app" y valor "nginx"
+  labels:
+    app: hermes-demo
+    entorno: desarrollo
+# Contiene la especificación del pod
+spec:
+# Aquí se nombran los contenedores que forman parte de este pod. Todos estos contenedores serían visibles por localhost
+  containers:
+  - name: hermes-demo
+    image: alcar21/hermes-demo:1.0.0
+    ports:
+     - containerPort: 8080
+# Aquí se define la política de restauración en caso de que el pod se detenga o deje de ejecutarse debido a un fallo interno.
+  restartPolicy: Always

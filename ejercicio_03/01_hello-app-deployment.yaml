@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-app
+  labels:
+    # Etiqueta que identifica el despliegue
+    app: hello-app
+spec:
+  # Tiempo para determinar que un despliegue ha fallado
+  progressDeadlineSeconds: 600
+  # Tiempo mínimo en que el contenedor estará listo (sin que falle nada)
+  minReadySeconds: 5
+  replicas: 3
+  # Número máximo de versiones que se guardaran para hacer rollback
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      # Etiquetas para identificar el replicaset
+      app: hello-app
+  template:
+    metadata:
+      labels:
+        # Etiquetas para identificar los pods en los objetos tipo servicios
+        app: hello-app
+    spec:
+      containers:
+      - name: hello-app
+        image: gcr.io/google-samples/hello-app:1.0
+        imagePullPolicy: IfNotPresent        
+        ports:
+          - containerPort: 8080
+
